@@ -1,52 +1,8 @@
-name: golangci-lint
-
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-permissions:
-  contents: read
-  pull-requests: read
-
-jobs:
-  golangci:
-    name: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@6c439dc8bdf85cadbbce9ed30d1c7b959517bc49 # v2.12.2
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-            golangci-lint.run:443
-            objects.githubusercontent.com:443
-            proxy.golang.org:443
-            raw.githubusercontent.com:443
-            storage.googleapis.com:443
-            sum.golang.org:443
-
-      - name: Set up Go
-        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
-        with:
-          go-version: '1.24'
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9 # v8.0.0
-        with:
-          # Note: there are 2 different version of golangci-lint used inside the project.
-          # https://github.com/gopasspw/gopass/blob/master/.github/workflows/build.yml#L65
-          # https://github.com/gopasspw/gopass/blob/master/.github/workflows/golangci-lint.yml#L46
-          # https://github.com/gopasspw/gopass/blob/master/Makefile#L136
-          version: v2.1.1 # we have a list of linters in our .golangci.yml config file
-          only-new-issues: true
+--- a/.github/workflows/golangci-lint.yml
++++ b/.github/workflows/golangci-lint.yml
+@@ -49,4 +49,4 @@
+           # https://github.com/gopasspw/gopass/blob/master/.github/workflows/golangci-lint.yml#L46
+           # https://github.com/gopasspw/gopass/blob/master/Makefile#L136
+           version: v2.1.1 # we have a list of linters in our .golangci.yml config file
+-          only-new-issues: true
++          only-new-issues: true
