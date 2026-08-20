@@ -1,47 +1,8 @@
-name: golangci-lint
-
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-permissions:
-  contents: read
-  pull-requests: read
-
-jobs:
-  golangci:
-    name: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-            objects.githubusercontent.com:443
-            proxy.golang.org:443
-            raw.githubusercontent.com:443
-            storage.googleapis.com:443
-            sum.golang.org:443
-
-      - name: Set up Go
-        uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7 # v5.0.1
-        with:
-          go-version: '1.22'
-      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@a4f60bb28d35aeee14e6880718e0c85ff1882e64 # v6.0.1
-        with:
-          version: v1.57.1 # we have a list of linters in our .golangci.yml config file
-          only-new-issues: true
+--- a/.github/workflows/golangci-lint.yml
++++ b/.github/workflows/golangci-lint.yml
+@@ -44,4 +44,4 @@
+         uses: golangci/golangci-lint-action@a4f60bb28d35aeee14e6880718e0c85ff1882e64 # v6.0.1
+         with:
+           version: v1.57.1 # we have a list of linters in our .golangci.yml config file
+-          only-new-issues: true
++          only-new-issues: true
